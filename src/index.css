@@ -1,0 +1,378 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;800&display=swap');
+
+:root {
+  /* Background Colors - Nuansa Hitam / Gelap */
+  --bg-main: #0a0a0a;         /* Hitam pekat tapi lembut untuk background utama */
+  --bg-surface: #171717;      /* Hitam keabu-abuan untuk card, navbar, atau section tertentu */
+  --bg-surface-hover: #262626; /* Warna saat cursor mengarah ke elemen (hover) */
+
+  /* Accent Colors - Nuansa Merah */
+  --accent-main: #d90429;     /* Merah elegan (tidak menyilaukan) untuk tombol atau teks penting */
+  --accent-hover: #ef233c;    /* Merah lebih terang untuk efek hover / interaksi */
+  --accent-dark: #8b0000;     /* Merah gelap untuk shadow atau border */
+
+  /* Text Colors */
+  --text-main: #f8f9fa;       /* Putih tulang (off-white) agar mata tidak lelah membaca */
+  --text-muted: #a3a3a3;      /* Abu-abu untuk teks deskripsi atau teks sekunder */
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* --- Gaya Teks Gradien Modern --- */
+.text-gradient {
+  background: linear-gradient(135deg, var(--accent-main), #ff8fa3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* --- Custom Navbar Styles --- */
+.custom-navbar {
+  background-color: rgba(10, 10, 10, 0.8) !important; /* Latar belakang transparan */
+  backdrop-filter: blur(12px); /* Efek blur ala glassmorphism */
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Garis batas tipis melingkar */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+  padding: 10px 25px !important;
+
+  /* Gaya Floating dan Rounded (Pill) di tengah */
+  width: 90%;
+  max-width: 1000px;
+  margin: 20px auto 0 auto !important; /* Posisi ke tengah dengan margin auto */
+  border-radius: 40px; /* Sudut melengkung */
+  z-index: 9999; /* Memastikan navbar selalu berada di lapisan paling atas */
+}
+
+.text-accent {
+  color: var(--accent-main);
+}
+
+/* Gaya khusus untuk Logo/Brand */
+.custom-brand {
+  color: var(--text-main) !important;
+  transition: color 0.3s ease;
+}
+.custom-brand:hover {
+  color: var(--accent-hover) !important;
+}
+
+.custom-nav-link {
+  color: var(--text-main) !important;
+  font-weight: 500;
+  margin: 0 12px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* Animasi garis bawah elegan saat hover */
+.custom-nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--accent-main);
+  transition: width 0.3s ease-in-out;
+}
+
+.custom-nav-link:hover, .custom-nav-link.active {
+  color: var(--accent-main) !important;
+}
+
+.custom-nav-link:hover::after, .custom-nav-link.active::after {
+  width: 100%;
+}
+
+/* Gaya khusus Tombol Contact */
+.nav-cta-btn {
+  background-color: var(--accent-main) !important;
+  color: var(--text-main) !important;
+  padding: 8px 24px !important;
+  border-radius: 30px;
+  margin-left: 10px;
+  box-shadow: 0 4px 15px rgba(217, 4, 41, 0.4); /* Efek glow / menyala */
+  transition: all 0.3s ease;
+}
+
+.nav-cta-btn.active {
+  color: var(--text-main) !important; /* Memastikan teks tombol contact tetap putih saat aktif */
+}
+
+.nav-cta-btn:hover {
+  color: var(--text-main) !important; /* Memastikan teks tombol contact tetap putih saat di-hover */
+  background-color: var(--accent-hover) !important;
+  transform: translateY(-3px); /* Efek tombol terangkat */
+  box-shadow: 0 6px 20px rgba(239, 35, 60, 0.6);
+}
+
+.nav-cta-btn::after {
+  display: none; /* Hilangkan garis bawah animasi khusus untuk tombol ini */
+}
+
+/* Tombol Sekunder / Outline */
+.custom-outline-btn {
+  border: 2px solid rgba(255, 255, 255, 0.2) !important;
+  color: var(--text-main) !important;
+  transition: all 0.3s ease;
+  background: transparent !important;
+}
+.custom-outline-btn:hover {
+  border-color: var(--text-main) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  transform: translateY(-3px);
+}
+
+/* Kustomisasi warna ikon Hamburger (Menu Mobile) untuk latar gelap */
+.custom-toggler {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+.custom-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(248, 249, 250, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+}
+
+/* Penyesuaian di layar HP (Mobile) agar bentuk rounded dan tombol tetap rapi */
+@media (max-width: 991px) {
+  .custom-navbar {
+    border-radius: 25px; /* Mengurangi lengkungan sedikit saat di HP */
+    padding: 15px 20px !important;
+  }
+  .custom-navbar .nav-cta-btn {
+    margin-left: 0;
+    margin-top: 15px;
+    display: inline-block;
+  }
+}
+
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 30px rgba(217, 4, 41, 0.2); }
+  50% { box-shadow: 0 0 60px rgba(217, 4, 41, 0.6); }
+  100% { box-shadow: 0 0 30px rgba(217, 4, 41, 0.2); }
+}
+
+/* --- Gaya Tambahan untuk Hero Section --- */
+.custom-hero-img {
+  width: 320px;
+  height: 320px;
+  background: linear-gradient(135deg, var(--bg-surface-hover), var(--bg-main));
+  border: 4px solid var(--accent-main);
+  animation: pulse-glow 3s ease-in-out infinite alternate;
+}
+
+/* Penyesuaian ukuran gambar agar tidak terlalu memakan tempat di HP */
+@media (max-width: 768px) {
+  .custom-hero-img {
+    margin-top: 50px;
+    width: 250px;
+    height: 250px;
+  }
+}
+
+/* Animasi elemen melayang (floating) */
+.floating-img {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+.tracking-wide {
+  letter-spacing: 1.5px;
+}
+
+/* --- Gaya Tambahan untuk About Section --- */
+.about-img-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+.about-img-placeholder {
+  width: 100%;
+  height: 450px;
+  background: linear-gradient(135deg, var(--bg-main), var(--bg-surface-hover));
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  z-index: 2;
+  position: relative;
+}
+
+@keyframes spin-slow {
+  100% { transform: rotate(360deg); }
+}
+
+.about-decoration {
+  width: 150px;
+  height: 150px;
+  background-color: var(--accent-main);
+  bottom: -30px;
+  right: -30px;
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; /* Bentuk tidak beraturan */
+  z-index: 0;
+  filter: blur(40px); /* Efek cahaya memudar */
+  opacity: 0.6;
+  animation: spin-slow 10s linear infinite;
+}
+
+.custom-badge {
+  border-color: var(--accent-main) !important;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.custom-badge:hover {
+  background-color: var(--accent-main) !important;
+  transform: translateY(-3px); /* Badge akan naik sedikit saat di-hover */
+  box-shadow: 0 4px 10px rgba(217, 4, 41, 0.4);
+}
+
+/* --- Gaya Tambahan untuk Services Section --- */
+.service-card {
+  background-color: var(--bg-surface) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  transition: all 0.4s ease;
+  border-radius: 20px !important;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  background-color: var(--bg-surface-hover) !important;
+  border-color: rgba(217, 4, 41, 0.3) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(217, 4, 41, 0.1);
+}
+
+.service-icon-box {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--accent-main), var(--accent-dark));
+  box-shadow: 0 4px 15px rgba(217, 4, 41, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover .service-icon-box {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* --- Gaya Tambahan untuk Projects Section --- */
+.project-card {
+  transition: all 0.4s ease;
+}
+
+.project-img-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.project-img {
+  transition: transform 0.5s ease;
+}
+
+.project-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(10, 10, 10, 0.7);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* Animasi slide up bertingkat untuk tombol di overlay */
+.project-overlay .btn {
+  transform: translateY(30px);
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.project-card:hover .project-overlay .btn {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.project-card:hover .project-overlay .btn:nth-child(1) { transition-delay: 0.1s; }
+.project-card:hover .project-overlay .btn:nth-child(2) { transition-delay: 0.2s; }
+
+
+.project-card:hover .project-img {
+  transform: scale(1.1);
+}
+
+.project-card:hover .project-overlay {
+  opacity: 1;
+}
+
+/* --- Gaya Tambahan untuk Contact Section --- */
+.contact-icon-box {
+  width: 50px;
+  height: 50px;
+  background-color: var(--bg-surface-hover);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.contact-icon-box:hover {
+  background-color: var(--accent-main);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(217, 4, 41, 0.4);
+}
+
+.contact-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  background-color: var(--bg-surface-hover);
+  color: var(--text-main);
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.contact-social-link:hover {
+  background-color: var(--accent-main);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(217, 4, 41, 0.4);
+}
+
+.custom-input {
+  background-color: var(--bg-main) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: var(--text-main) !important;
+  border-radius: 10px;
+  padding: 12px 15px;
+  transition: all 0.3s ease;
+}
+
+.custom-input:focus {
+  border-color: var(--accent-main) !important;
+  box-shadow: 0 0 0 0.25rem rgba(217, 4, 41, 0.25) !important;
+  background-color: var(--bg-main) !important;
+  transform: translateY(-3px);
+}
+
+.custom-input::placeholder {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* --- Gaya Tambahan untuk Footer --- */
+.footer-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--accent-main);
+}
