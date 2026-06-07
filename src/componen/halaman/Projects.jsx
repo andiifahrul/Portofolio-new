@@ -112,7 +112,7 @@ const Projects = () => {
                 <Card className="project-card h-100 bg-transparent border-0 overflow-hidden">
                   <div className="project-img-wrapper">
                     <Card.Img variant="top" src={project.image} className="project-img" />
-                    <div className="project-overlay d-flex align-items-center justify-content-center flex-wrap gap-2">
+                    <div className="project-overlay d-none d-lg-flex align-items-center justify-content-center flex-wrap gap-2">
                       <Button onClick={() => handleShowModal(project)} className="nav-cta-btn border-0 m-0">
                         Detail
                       </Button>
@@ -130,6 +130,17 @@ const Projects = () => {
                     <Card.Text style={{ color: 'var(--text-muted)' }}>
                       {project.description}
                     </Card.Text>
+                    {/* Tombol Detail & Demo Khusus Layar HP/Tablet */}
+                    <div className="d-flex d-lg-none gap-2 mt-3">
+                      <Button onClick={() => handleShowModal(project)} className="nav-cta-btn border-0 m-0 flex-grow-1">
+                        Detail
+                      </Button>
+                      {project.demoLink && (
+                        <Button as="a" href={getValidUrl(project.demoLink)} target="_blank" rel="noopener noreferrer" className="custom-outline-btn rounded-pill shadow-none flex-grow-1 text-center" style={{ padding: '8px 24px' }}>
+                          Demo
+                        </Button>
+                      )}
+                    </div>
                   </Card.Body>
                 </Card>
               </motion.div>
