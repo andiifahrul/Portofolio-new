@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Modal } from 'react-bootstrap';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '../../supabaseClient';
 
@@ -8,6 +8,8 @@ const Projects = () => {
 
   // State untuk menyimpan daftar proyek (sekarang murni dari Supabase)
   const [projectsList, setProjectsList] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
 
   // Mengambil data proyek dari Supabase saat halaman dimuat
   useEffect(() => {
@@ -24,6 +26,24 @@ const Projects = () => {
 
     fetchProjects();
   }, []);
+
+  // Fungsi untuk memunculkan modal detail
+  const handleShowModal = (project) => {
+    setSelectedProject(project);
+    setShowModal(true);
+  };
+
+  // Fungsi untuk menutup modal
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedProject(null);
+  };
+
+  // Memastikan link selalu berawalan http/https agar peramban langsung membukanya di web eksternal (Vercel)
+  const getValidUrl = (url) => {
+    if (!url) return '#';
+    return url.startsWith('http') ? url : `https://${url}`;
+  };
 
   const filteredProjects = filter === 'all'
     ? projectsList
@@ -93,12 +113,14 @@ const Projects = () => {
                   <div className="project-img-wrapper">
                     <Card.Img variant="top" src={project.image} className="project-img" />
                     <div className="project-overlay d-flex align-items-center justify-content-center flex-wrap gap-2">
-                      <Button as="a" href={project.detailLink} target="_blank" rel="noopener noreferrer" className="nav-cta-btn border-0 m-0">
+                      <Button onClick={() => handleShowModal(project)} className="nav-cta-btn border-0 m-0">
                         Detail
                       </Button>
-                      <Button as="a" href={project.demoLink} target="_blank" rel="noopener noreferrer" className="custom-outline-btn rounded-pill shadow-none" style={{ padding: '8px 24px' }}>
-                        Demo
-                      </Button>
+                      {project.demoLink && (
+                        <Button as="a" href={getValidUrl(project.demoLink)} target="_blank" rel="noopener noreferrer" className="custom-outline-btn rounded-pill shadow-none" style={{ padding: '8px 24px' }}>
+                          Demo
+                        </Button>
+                      )}
                     </div>
                   </div>
                   <Card.Body className="px-0 py-4">
@@ -116,6 +138,37 @@ const Projects = () => {
           </AnimatePresence>
         </Row>
       </Container>
+
+      {/* --- Modal Detail Proyek --- */}
+      <Modal show={showModal} onHide={handleCloseModal} size="lg" centered>
+        {selectedProject && (
+          <>
+            <Modal.Header closeButton closeVariant="white" style={{ backgroundColor: 'var(--bg-surface)', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+              <Modal.Title style={{ color: 'var(--text-main)' }}>{selectedProject.title}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body style={{ backgroundColor: 'var(--bg-main)', color: 'var(--text-main)' }}>
+              <img src={selectedProject.image} alt={selectedProject.title} className="img-fluid rounded mb-4" style={{ width: '100%', maxHeight: '400px', objectFit: 'cover' }} />
+              <h5 className="text-accent mb-3">Detail Proyek</h5>
+              <p style={{ color: 'var(--text-muted)', whiteSpace: 'pre-line' }}>{selectedProject.detail || selectedProject.description}</p>
+            </Modal.Body>
+            <Modal.Footer style={{ backgroundColor: 'var(--bg-surface)', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+              <Button variant="secondary" onClick={handleCloseModal} className="rounded-pill border-0" style={{ backgroundColor: 'rgba(255,255,255,0.1)' }}>
+                Tutup
+              </Button>
+              {selectedProject.detailLink && (
+                <Button as="a" href={getValidUrl(selectedProject.detailLink)} target="_blank" rel="noopener noreferrer" className="custom-outline-btn rounded-pill shadow-none" style={{ padding: '8px 24px' }}>
+                  Kunjungi Detail
+                </Button>
+              )}
+              {selectedProject.demoLink && (
+                <Button as="a" href={getValidUrl(selectedProject.demoLink)} target="_blank" rel="noopener noreferrer" className="nav-cta-btn border-0 m-0">
+                  Kunjungi Demo
+                </Button>
+              )}
+            </Modal.Footer>
+          </>
+        )}
+      </Modal>
     </section>
   );
 };
