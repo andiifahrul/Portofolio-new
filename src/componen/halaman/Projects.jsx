@@ -17,7 +17,8 @@ const Projects = () => {
       const { data, error } = await supabase
         .from('projects')
         .select('*')
-        .order('created_at', { ascending: false }); // Tampilkan yang terbaru di atas
+        .order('display_order', { ascending: true })
+        .order('created_at', { ascending: false }); // Tampilkan berdasarkan urutan custom
 
       if (data && !error) {
         setProjectsList(data);

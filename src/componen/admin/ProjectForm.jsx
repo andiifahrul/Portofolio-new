@@ -76,7 +76,7 @@ const ProjectForm = ({ projectToEdit, onSuccess, onCancel }) => {
         if (updateError) throw updateError;
         alert("Berhasil! Proyek telah diperbarui.");
       } else {
-        const { error: insertError } = await supabase.from('projects').insert([{ ...project, image: finalImageUrl }]);
+        const { error: insertError } = await supabase.from('projects').insert([{ ...project, image: finalImageUrl, display_order: 999 }]);
         if (insertError) throw insertError;
         alert("Berhasil! Proyek telah ditambahkan ke database.");
       }
