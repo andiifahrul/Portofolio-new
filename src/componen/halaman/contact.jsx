@@ -1,9 +1,48 @@
-import React from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import { motion } from 'framer-motion';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaLinkedin, FaInstagram, FaGithub } from 'react-icons/fa';
+import { supabase } from '../../supabaseClient';
 
 const Contact = () => {
+  // Menyimpan data dari inputan form
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState({ show: false, variant: '', message: '' });
+
+  // Menangani perubahan input teks
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // Menangani pengiriman form ke Supabase
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      // Insert data ke tabel 'contacts' di Supabase
+      const { error } = await supabase
+        .from('contacts')
+        .insert([
+          { name: formData.name, email: formData.email, message: formData.message }
+        ]);
+
+      if (error) throw error;
+
+      setSubmitStatus({ show: true, variant: 'success', message: 'Pesan berhasil dikirim! Saya akan segera menghubungi Anda kembali.' });
+      setFormData({ name: '', email: '', message: '' }); // Reset form setelah berhasil
+    } catch (error) {
+      setSubmitStatus({ show: true, variant: 'danger', message: 'Gagal mengirim pesan: ' + error.message });
+    } finally {
+      setIsSubmitting(false);
+      // Sembunyikan notifikasi otomatis setelah 5 detik
+      setTimeout(() => {
+        setSubmitStatus({ show: false, variant: '', message: '' });
+      }, 5000);
+    }
+  };
+
   return (
     <section id="contact" className="py-5" style={{ backgroundColor: 'var(--bg-main)' }}>
       <Container className="py-5">
@@ -45,7 +84,7 @@ const Contact = () => {
                   <div className="contact-icon-box d-flex align-items-center justify-content-center rounded-circle"><FaEnvelope /></div>
                   <div>
                     <h6 className="mb-1 fw-bold" style={{ color: 'var(--text-main)' }}>Email</h6>
-                    <p className="mb-0" style={{ color: 'var(--text-muted)' }}>emailanda@example.com</p>
+                    <p className="mb-0" style={{ color: 'var(--text-muted)' }}>andiahmadfahrul02@gmail.com.com</p>
                   </div>
                 </motion.div>
                 <motion.div 
@@ -58,7 +97,7 @@ const Contact = () => {
                   <div className="contact-icon-box d-flex align-items-center justify-content-center rounded-circle"><FaPhone /></div>
                   <div>
                     <h6 className="mb-1 fw-bold" style={{ color: 'var(--text-main)' }}>Telepon</h6>
-                    <p className="mb-0" style={{ color: 'var(--text-muted)' }}>+62 812 3456 7890</p>
+                    <p className="mb-0" style={{ color: 'var(--text-muted)' }}>+62 858 2557 7684</p>
                   </div>
                 </motion.div>
                 <motion.div 
@@ -71,7 +110,7 @@ const Contact = () => {
                   <div className="contact-icon-box d-flex align-items-center justify-content-center rounded-circle"><FaMapMarkerAlt /></div>
                   <div>
                     <h6 className="mb-1 fw-bold" style={{ color: 'var(--text-main)' }}>Lokasi</h6>
-                    <p className="mb-0" style={{ color: 'var(--text-muted)' }}>Jakarta, Indonesia</p>
+                    <p className="mb-0" style={{ color: 'var(--text-muted)' }}>Sulawesi Selatan, Indonesia</p>
                   </div>
                 </motion.div>
 
@@ -99,27 +138,39 @@ const Contact = () => {
               className="p-4 p-md-5 rounded-4"
               style={{ backgroundColor: 'var(--bg-surface)' }}
             >
-              <Form>
+              <Form onSubmit={handleSubmit}>
+            {submitStatus.show && (
+              <Alert 
+                className="mb-4 border-0" 
+                style={{ 
+                  backgroundColor: submitStatus.variant === 'success' ? 'rgba(25, 135, 84, 0.1)' : 'rgba(217, 4, 41, 0.1)',
+                  color: submitStatus.variant === 'success' ? '#20c997' : 'var(--accent-hover)',
+                  borderLeft: `4px solid ${submitStatus.variant === 'success' ? '#198754' : 'var(--accent-main)'}`
+                }}
+              >
+                {submitStatus.message}
+              </Alert>
+            )}
                 <Row>
                   <Col md={6} className="mb-4">
                     <Form.Group>
                       <Form.Label style={{ color: 'var(--text-muted)' }}>Nama Lengkap</Form.Label>
-                      <Form.Control type="text" placeholder="Masukkan nama" className="custom-input" />
+                      <Form.Control type="text" name="name" value={formData.name} onChange={handleChange} required placeholder="Masukkan nama" className="custom-input" />
                     </Form.Group>
                   </Col>
                   <Col md={6} className="mb-4">
                     <Form.Group>
                       <Form.Label style={{ color: 'var(--text-muted)' }}>Email</Form.Label>
-                      <Form.Control type="email" placeholder="Masukkan email" className="custom-input" />
+                      <Form.Control type="email" name="email" value={formData.email} onChange={handleChange} required placeholder="Masukkan email" className="custom-input" />
                     </Form.Group>
                   </Col>
                 </Row>
                 <Form.Group className="mb-5">
                   <Form.Label style={{ color: 'var(--text-muted)' }}>Pesan</Form.Label>
-                  <Form.Control as="textarea" rows={5} placeholder="Tulis pesan Anda di sini..." className="custom-input" />
+                  <Form.Control as="textarea" rows={5} name="message" value={formData.message} onChange={handleChange} required placeholder="Tulis pesan Anda di sini..." className="custom-input" />
                 </Form.Group>
-                <Button className="nav-cta-btn border-0 w-100 py-3 fs-5" style={{ marginLeft: 0 }}>
-                  Kirim Pesan
+                <Button type="submit" disabled={isSubmitting} className="nav-cta-btn border-0 w-100 py-3 fs-5" style={{ marginLeft: 0 }}>
+                  {isSubmitting ? 'Mengirim...' : 'Kirim Pesan'}
                 </Button>
               </Form>
             </motion.div>

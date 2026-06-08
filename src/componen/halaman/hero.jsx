@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { FaInstagram, FaLinkedin, FaGithub } from 'react-icons/fa';
 
 // Import gambar hero dari folder Assets
+import { Link } from 'react-scroll';
 import heroImage from '../../Assets/aboutme.jpg';
 
 const Hero = () => {
@@ -26,21 +27,19 @@ const Hero = () => {
                 }
               }}
             >
-              <motion.h5 variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }} className="text-accent fw-bold mb-2 tracking-wide">HALO, SAYA</motion.h5>
-              <motion.h1 variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }} className="display-3 fw-bold mb-3" style={{ color: 'var(--text-main)' }}>
-                Seorang <span className="text-gradient">Developer.</span>
+              <motion.h6 variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }} className="text-accent fw-bold mb-2 tracking-wide">HALO, SAYA</motion.h6>
+              <motion.h1 variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }} className="fs-2 fw-bold mb-3" style={{ color: 'var(--text-main)' }}>
+                Seorang <span className="text-gradient">Web Developer | UI/UX Designer | Dashboard Architect.</span>
               </motion.h1>
-              <motion.h2 variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }} className="fs-4 mb-4" style={{ color: 'var(--text-muted)' }}>Membangun Website Modern & Interaktif</motion.h2>
               <motion.p variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }} className="lead mb-5" style={{ color: 'var(--text-muted)' }}>
-                Saya adalah seorang pengembang web yang bersemangat menciptakan antarmuka pengguna yang interaktif, responsif, dan elegan dengan sentuhan animasi modern.
+               Saya memadukan estetika desain dengan fungsionalitas sistem untuk membangun web interaktif dan dashboard data yang intuitif. Fokus saya adalah menciptakan solusi digital yang elegan, efisien, dan berpusat pada pengalaman pengguna.
               </motion.p>
-              
               <motion.div variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }} className="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
-                <Button className="nav-cta-btn px-4 py-2 fs-5" style={{ margin: 0 }}>
+                <Button as={Link} to="projects" smooth={true} offset={-100} duration={500} className="nav-cta-btn px-4 py-2 fs-5" style={{ margin: 0, cursor: 'pointer' }}>
                   Lihat Proyek
                 </Button>
               <div className="d-flex gap-3 align-items-center ms-lg-2">
-                <a href="https://instagram.com/username-anda" target="_blank" rel="noreferrer" className="contact-social-link text-decoration-none">
+                <a href="https://www.instagram.com/andii_fahrul" target="_blank" rel="noreferrer" className="contact-social-link text-decoration-none">
                   <FaInstagram size={22} />
                 </a>
                 <a href="https://linkedin.com/in/username-anda" target="_blank" rel="noreferrer" className="contact-social-link text-decoration-none">
@@ -68,8 +67,7 @@ const Hero = () => {
                 alt="Hero Profile" 
                 className="mx-auto rounded-circle custom-hero-img d-block"
                 style={{ 
-                  objectFit: 'cover',
-                  filter: 'grayscale(10%) sepia(15%) hue-rotate(320deg) brightness(0.9) contrast(110%)'
+                  objectFit: 'cover'
                 }} 
               />
             </motion.div>

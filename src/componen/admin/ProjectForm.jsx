@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Card } from 'react-bootstrap';
 import { supabase } from '../../supabaseClient';
+import imageCompression from 'browser-image-compression';
 
 const ProjectForm = ({ projectToEdit, onSuccess, onCancel }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -45,10 +46,21 @@ const ProjectForm = ({ projectToEdit, onSuccess, onCancel }) => {
       let finalImageUrl = project.image;
 
       if (imageFile) {
+        // Opsi pengaturan kompresi gambar
+        const options = {
+          maxSizeMB: 0.5,           // Maksimal ukuran file setelah dikompres (0.5 MB = 500 KB)
+          maxWidthOrHeight: 1280,   // Resolusi maksimal 1280 piksel (menjaga kualitas tetap tajam)
+          useWebWorker: true        // Mempercepat kompresi menggunakan worker agar web tidak freeze
+        };
+
+        // Proses kompresi gambar
+        const compressedFile = await imageCompression(imageFile, options);
+
+        // Gunakan imageFile.name (file asli) agar lebih aman dan terhindar dari error undefined
         const fileExt = imageFile.name.split('.').pop();
         const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
         
-        const { error: uploadError } = await supabase.storage.from('project-images').upload(fileName, imageFile);
+        const { error: uploadError } = await supabase.storage.from('project-images').upload(fileName, compressedFile);
         if (uploadError) throw uploadError;
 
         const { data: publicUrlData } = supabase.storage.from('project-images').getPublicUrl(fileName);

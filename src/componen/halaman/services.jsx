@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { motion } from 'framer-motion';
-import { FaCode, FaPaintBrush, FaMobileAlt } from 'react-icons/fa';
+import { FaCode, FaPaintBrush, FaChartBar } from 'react-icons/fa';
 
 const Services = () => {
   // Data layanan yang bisa Anda tawarkan
@@ -19,9 +19,9 @@ const Services = () => {
       delay: 0.2
     },
     {
-      title: "Mobile Optimization",
-      description: "Memastikan website Anda terlihat sempurna dan berfungsi dengan lancar di semua perangkat, mulai dari HP hingga desktop.",
-      icon: <FaMobileAlt size={28} />,
+      title: "Dashboard Development",
+      description: "Membangun antarmuka dashboard data yang interaktif dan kompleks, menyajikan visualisasi informasi yang intuitif dan berkinerja tinggi.",
+      icon: <FaChartBar size={28} />,
       delay: 0.3
     }
   ];

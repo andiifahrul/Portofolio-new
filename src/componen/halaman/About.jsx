@@ -1,11 +1,38 @@
 import React from 'react';
 import { Container, Row, Col, Badge } from 'react-bootstrap';
 import { motion } from 'framer-motion';
-import aboutImage from '../../Assets/aboutme.jpg'; // Pastikan Anda memiliki gambar ini di folder Assets
+import aboutImage from '../../Assets/po.jpg'; // Pastikan Anda memiliki gambar ini di folder Assets
+import { FaLaptopCode, FaServer, FaCodeBranch, FaReact, FaNodeJs, FaBootstrap, FaFigma, FaGitAlt } from 'react-icons/fa';
+import { SiTailwindcss } from 'react-icons/si';
 
 const About = () => {
-  // Daftar skill Anda, bisa disesuaikan nanti
-  const skills = ["React JS", "Node JS", "Bootstrap", "Tailwind", "Figma", "Git"];
+  // Daftar skill yang dikategorikan beserta icon
+  const skillCategories = [
+    {
+      title: "Front-End",
+      icon: <FaLaptopCode className="text-accent me-2" />,
+      skills: [
+        { name: "React JS", icon: <FaReact className="me-2" /> },
+        { name: "Tailwind", icon: <SiTailwindcss className="me-2" /> },
+        { name: "Bootstrap", icon: <FaBootstrap className="me-2" /> },
+        { name: "Figma (UI/UX)", icon: <FaFigma className="me-2" /> }
+      ]
+    },
+    {
+      title: "Back-End",
+      icon: <FaServer className="text-accent me-2" />,
+      skills: [
+        { name: "Node JS", icon: <FaNodeJs className="me-2" /> }
+      ]
+    },
+    {
+      title: "Workflow",
+      icon: <FaCodeBranch className="text-accent me-2" />,
+      skills: [
+        { name: "Git", icon: <FaGitAlt className="me-2" /> }
+      ]
+    }
+  ];
 
   return (
     <section id="about" className="py-5" style={{ backgroundColor: 'var(--bg-surface)' }}>
@@ -32,8 +59,7 @@ const About = () => {
                   objectFit: 'cover', 
                   zIndex: 2,
                   border: '2px solid rgba(217, 4, 41, 0.6)', 
-                  boxShadow: '0 10px 30px rgba(217, 4, 41, 0.2)', // Memberikan efek glow/cahaya merah
-                  filter: 'grayscale(10%) sepia(15%) hue-rotate(320deg) brightness(0.9) contrast(110%)' // Toning disesuaikan agar tidak terlalu gelap
+                  boxShadow: '0 10px 30px rgba(217, 4, 41, 0.2)' // Memberikan efek glow/cahaya merah
                 }} 
               />
               {/* Efek cahaya merah di belakang gambar */}
@@ -54,22 +80,29 @@ const About = () => {
                 Kreativitas Bertemu <span className="text-gradient">Logika.</span>
               </h2>
               <p className="lead mb-4" style={{ color: 'var(--text-muted)' }}>
-                Saya adalah seorang Web Developer yang fokus pada pembuatan pengalaman digital yang luar biasa. Saya menggabungkan desain antarmuka yang indah dengan kode struktur yang bersih untuk menciptakan *website* yang tidak hanya menarik secara visual, tetapi juga memiliki performa tinggi.
+                Saya adalah Web Developer yang memadukan estetika desain dengan fungsionalitas sistem. Saya spesialis dalam membangun website interaktif serta dashboard data yang intuitif dan berkinerja tinggi. Saya berkomitmen menciptakan solusi digital yang elegan, efisien, dan berpusat pada pengalaman pengguna.
               </p>
               
-              <h5 className="mb-3" style={{ color: 'var(--text-main)' }}>Keahlian Saya:</h5>
-              <div className="d-flex flex-wrap gap-2 mb-5">
-                {skills.map((skill, index) => (
-                  <motion.div
+              <h5 className="mb-4" style={{ color: 'var(--text-main)' }}>Keahlian Saya:</h5>
+              <div className="d-flex flex-column gap-3 mb-5">
+                {skillCategories.map((cat, index) => (
+                  <motion.div 
                     key={index}
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                     viewport={{ once: true }}
                   >
-                    <Badge pill bg="transparent" className="border border-danger text-light p-2 px-3 fs-6 custom-badge">
-                      {skill}
-                    </Badge>
+                    <h6 style={{ color: 'var(--text-muted)' }} className="mb-2 d-flex align-items-center">
+                      {cat.icon} {cat.title}
+                    </h6>
+                    <div className="d-flex flex-wrap gap-2">
+                      {cat.skills.map((skill, idx) => (
+                        <Badge key={idx} pill bg="transparent" className="border border-danger text-light p-2 px-3 fs-6 custom-badge d-flex align-items-center">
+                          {skill.icon} {skill.name}
+                        </Badge>
+                      ))}
+                    </div>
                   </motion.div>
                 ))}
               </div>
