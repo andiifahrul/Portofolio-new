@@ -1,0 +1,133 @@
+import React from 'react';
+import { Container, Row, Col, Badge } from 'react-bootstrap';
+import { motion } from 'framer-motion';
+import aboutImage from '../../Assets/po.jpg'; // Pastikan Anda memiliki gambar ini di folder Assets
+import { 
+  FaLaptopCode, 
+  FaServer, 
+  FaCodeBranch, 
+  FaReact, 
+  FaNodeJs, 
+  FaBootstrap, 
+  FaFigma, 
+  FaChartBar, 
+  FaFileExcel, 
+  FaDatabase 
+} from 'react-icons/fa';
+import { SiTailwindcss } from 'react-icons/si';
+
+const About = () => {
+  // Daftar skill yang dikategorikan beserta icon
+  const skillCategories = [
+    {
+      title: "Front-End",
+      icon: <FaLaptopCode className="text-accent me-2" />,
+      skills: [
+        { name: "React JS", icon: <FaReact className="me-2" /> },
+        { name: "Tailwind", icon: <SiTailwindcss className="me-2" /> },
+        { name: "Bootstrap", icon: <FaBootstrap className="me-2" /> },
+        { name: "Figma (UI/UX)", icon: <FaFigma className="me-2" /> }
+      ]
+    },
+    {
+      title: "Data & Analytics",
+      icon: <FaChartBar className="text-accent me-2" />,
+      skills: [
+        { name: "Microsoft Excel", icon: <FaFileExcel className="me-2" /> },
+        { name: "Power BI", icon: <FaChartBar className="me-2" /> },
+        { name: "SQL", icon: <FaDatabase className="me-2" /> }
+      ]
+    },
+    {
+      title: "Back-End",
+      icon: <FaServer className="text-accent me-2" />,
+      skills: [
+        { name: "Node JS", icon: <FaNodeJs className="me-2" /> }
+      ]
+    },
+  ];
+
+  return (
+    <section id="about" className="py-5" style={{ backgroundColor: 'var(--bg-surface)' }}>
+      <Container className="py-5">
+        <Row className="align-items-center">
+          
+          {/* --- Bagian Gambar / Visual (Kiri) --- */}
+          <Col lg={5} className="mb-5 mb-lg-0">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true, amount: 0.3 }}
+              className="about-img-wrapper"
+            >
+              <img 
+                src={aboutImage} 
+                alt="Tentang Saya" 
+                className="rounded-4 shadow-lg position-relative"
+                style={{ 
+                  width: '100%', 
+                  height: '450px', 
+                  objectFit: 'cover', 
+                  zIndex: 2,
+                  border: '2px solid rgba(217, 4, 41, 0.6)', 
+                  boxShadow: '0 10px 30px rgba(217, 4, 41, 0.2)' 
+                }} 
+              />
+              <div className="about-decoration rounded-circle position-absolute"></div>
+            </motion.div>
+          </Col>
+
+          {/* --- Bagian Teks (Kanan) --- */}
+          <Col lg={7} className="px-lg-5">
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              <h6 className="text-accent fw-bold mb-2 tracking-wide">TENTANG SAYA</h6>
+              <h2 className="display-5 fw-bold mb-4" style={{ color: 'var(--text-main)' }}>
+                Kreativitas Bertemu <span className="text-gradient">Logika.</span>
+              </h2>
+              <p className="lead mb-4" style={{ color: 'var(--text-muted)' }}>
+                Saya adalah Full-Stack Developer & Data Analyst[cite: 1] yang memadukan estetika desain dengan ketajaman analisis data. Saya spesialis dalam membangun website interaktif[cite: 1] serta mengolah data kompleks menjadi dashboard analitis yang intuitif menggunakan Microsoft Excel, Power BI, dan SQL untuk mendukung pengambilan keputusan bisnis yang akurat[cite: 1].
+              </p>
+              
+              <h5 className="mb-4" style={{ color: 'var(--text-main)' }}>Keahlian Saya:</h5>
+              <div className="d-flex flex-column gap-3 mb-5">
+                {skillCategories.map((cat, index) => (
+                  <motion.div 
+                    key={index}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.4, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    <h6 style={{ color: 'var(--text-muted)' }} className="mb-2 d-flex align-items-center">
+                      {cat.icon} {cat.title}
+                    </h6>
+                    <div className="d-flex flex-wrap gap-2">
+                      {cat.skills.map((skill, idx) => (
+                        <Badge key={idx} pill bg="transparent" className="border border-danger text-light p-2 px-3 fs-6 custom-badge d-flex align-items-center">
+                          {skill.icon} {skill.name}
+                        </Badge>
+                      ))}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              <button className="nav-cta-btn border-0 py-2 px-4 fs-5">
+                Unduh CV Saya
+              </button>
+            </motion.div>
+          </Col>
+
+        </Row>
+      </Container>
+    </section>
+  );
+};
+
+export default About;
