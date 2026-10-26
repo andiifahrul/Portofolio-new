@@ -29,7 +29,7 @@ const Hero = () => {
             >
               <motion.h6 variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }} className="text-accent fw-bold mb-2 tracking-wide">HALO, SAYA</motion.h6>
               <motion.h1 variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }} className="fs-2 fw-bold mb-3" style={{ color: 'var(--text-main)' }}>
-                Seorang <span className="text-gradient">Full-Stack Developer | UI/UX Designer | Data & Dashboard Analyst.</span>
+                Seorang <span className="text-gradient">Full-Stack Developer | UI/UX Designer | Data Analyst.</span>
               </motion.h1>
               <motion.p variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }} className="lead mb-5" style={{ color: 'var(--text-muted)' }}>
                Saya adalah Full-Stack Developer & Data Analyst yang memadukan estetika desain dengan ketajaman analisis data. Saya spesialis dalam membangun website interaktif serta mengolah data kompleks menjadi dashboard analitis yang intuitif menggunakan Microsoft Excel, Power BI, dan SQL untuk mendukung pengambilan keputusan bisnis yang akurat.
